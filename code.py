@@ -43,16 +43,33 @@ class individual:
         else:
             self.fitness=self.total_weight
 
+    def mutation (self):
+        if random.randint(1,100) <= 2 :
+            index=random.randint(0,number_of_things-1)
+            if(self.Chromosome[index]==1):
+                self.Chromosome.pop(index)
+                self.Chromosome.insert(index,0)
+            else :
+                self.Chromosome.pop(index)
+                self.Chromosome.insert(index,1)
+            
+
+
 
 # print( "testing...")
 # test=[0,1,0,0,1,1,0,0,0,0]
 # o1=individual(False ,test)        
-# # o1=individual(True) 
+# o1=individual(True) 
 # print("O1:")
 # print("Total weight:" , o1.total_weight)
 # print("total value:" , o1.total_value)
 # print("fitness:" , o1.fitness)
 # print(o1.Chromosome)
+# o1.mutation()
+# print(o1.Chromosome)
+
+
+
 
 
 
