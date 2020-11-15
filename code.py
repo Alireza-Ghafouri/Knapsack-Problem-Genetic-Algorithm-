@@ -5,7 +5,10 @@ class thing:
         self.value=int(value)
 
 things=[]
+population=[]
 number_of_things=0
+number_of_population= 20                      #could be changed...
+
 
 # reading data from file 
 
@@ -25,14 +28,9 @@ for line in lines:
 knapsack_size=165                           #could be changed...
 
 class individual:
-    def __init__(self,First_Generation=False,Chrm=[]):
+    def __init__(self,Chrm=[]):
         self.Chromosome=[]
-        if First_Generation :
-            for i in range (number_of_things):
-                self.Chromosome.append( random.randint(0,1) )    
-        else:
-            self.Chromosome=Chrm
-        
+        self.Chromosome=Chrm
         self.total_weight=0
         self.total_value=0
         for i in range (number_of_things):
@@ -58,7 +56,7 @@ class individual:
 
 # print( "testing...")
 # test=[0,1,0,0,1,1,0,0,0,0]
-# o1=individual(False ,test)        
+# o1=individual(test)        
 # o1=individual(True) 
 # print("O1:")
 # print("Total weight:" , o1.total_weight)
@@ -67,6 +65,21 @@ class individual:
 # print(o1.Chromosome)
 # o1.mutation()
 # print(o1.Chromosome)
+
+def Produce_First_Generation(number_of_population):
+    chrm=[]
+    for i in range (number_of_population):
+        for ii in range (number_of_things): 
+            chrm.append( random.randint(0,1) )
+        population.append ( individual(chrm) ) 
+
+# print( "testing...")
+# Produce_First_Generation(number_of_population)
+# for item in population:
+#     print(item.Chromosome)
+
+
+
 
 
 
