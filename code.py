@@ -7,7 +7,7 @@ class thing:
 things=[]
 population=[]
 number_of_things=0
-number_of_population= 20                      #could be changed...
+number_of_population= 12                      #could be changed...
 
 
 # reading data from file 
@@ -71,7 +71,8 @@ def Produce_First_Generation(number_of_population):
     for i in range (number_of_population):
         for ii in range (number_of_things): 
             chrm.append( random.randint(0,1) )
-        population.append ( individual(chrm) ) 
+        if individual(chrm).fitness != 0 :                      # do not add individual with fitness=0
+            population.append ( individual(chrm) ) 
 
 # print( "testing...")
 # Produce_First_Generation(number_of_population)
@@ -79,7 +80,42 @@ def Produce_First_Generation(number_of_population):
 #     print(item.Chromosome)
 
 
+def Roulette_Wheel( population=[] , num=1 ):
+    sum_of_chances=population[0].fitness
+    selected=[]
+    RW= [    ( population[0]  , population[0].fitness )  ]
+    for item in population[1:]:
+        sum_of_chances += item.fitness
+        RW.append( (item , sum_of_chances ) )
+    
+    for i in range (num):
+        select=random.randint(0,sum_of_chances)
+        for item in RW:
+            if select < item[1]:
+                selected.append( item[0] )
+                break
+    
+    return selected
 
+
+print( "testing" )
+t1=[0,1,0,0,0,0,0,1,0,0]
+t2=[0,0,0,1,0,0,0,0,1,0] 
+t3=[1,0,0,0,0,0,0,0,0,0] 
+t4=[0,0,0,0,0,0,0,0,0,1]
+o1=individual(t1)
+o2=individual(t2)
+o3=individual(t3)
+o4=individual(t4)
+o=[o1,o2,o3,o4]
+print("o1.fitness:" , o1.fitness)
+print("o2.fitness:" , o2.fitness)
+print("o3.fitness:" , o3.fitness)
+print("o4.fitness:" , o4.fitness)
+print("selected:")
+for i in Roulette_Wheel(o):
+    print(i.fitness) 
+        
 
 
 
