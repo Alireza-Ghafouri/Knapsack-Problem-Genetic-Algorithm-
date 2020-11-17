@@ -10,15 +10,15 @@ number_of_things=0
 number_of_population= 12                      #could be changed...
 knapsack_size=165                             #could be changed...
 
-# reading data from file 
-file= open("data.txt", "rt")
-file.readline()
-lines=file.readlines()
-for line in lines:
-    temp= line.split(",",1)
-    obj = thing ( int(temp[0]) , temp[1] )
-    things.append(obj)
-    number_of_things += 1
+def Read_Things_info():
+    file= open("data.txt", "rt")
+    file.readline()
+    lines=file.readlines()
+    for line in lines:
+        temp= line.split(",",1)
+        obj = thing ( int(temp[0]) , temp[1] )
+        things.append(obj)
+        number_of_things += 1
 
 class individual:
     def __init__(self,Chrm):
