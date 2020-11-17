@@ -23,12 +23,12 @@ for line in lines:
 
 # for t in things:
 #     print(t.weight,"    " , t.value)
-print(number_of_things)
+# print(number_of_things)
 
 knapsack_size=165                           #could be changed...
 
 class individual:
-    def __init__(self,Chrm=[]):
+    def __init__(self,Chrm):
         self.Chromosome=[]
         self.Chromosome=Chrm
         self.total_weight=0
@@ -80,7 +80,7 @@ def Produce_First_Generation(number_of_population):
 #     print(item.Chromosome)
 
 
-def Roulette_Wheel( population=[] , num=1 ):
+def Roulette_Wheel( population , num=1 ):
     sum_of_chances=population[0].fitness
     selected=[]
     RW= [    ( population[0]  , population[0].fitness )  ]
@@ -98,26 +98,26 @@ def Roulette_Wheel( population=[] , num=1 ):
     return selected
 
 
-# print( "testing" )
-# t1=[0,1,0,0,0,0,0,1,0,0]
-# t2=[0,0,0,1,0,0,0,0,1,0] 
-# t3=[1,0,0,0,0,0,0,0,0,0] 
-# t4=[0,0,0,0,0,0,0,0,0,1]
-# o1=individual(t1)
-# o2=individual(t2)
-# o3=individual(t3)
-# o4=individual(t4)
-# o=[o1,o2,o3,o4]
-# print("o1.fitness:" , o1.fitness)
-# print("o2.fitness:" , o2.fitness)
-# print("o3.fitness:" , o3.fitness)
-# print("o4.fitness:" , o4.fitness)
-# print("selected:")
-# for i in Roulette_Wheel(o):
-#     print(i.fitness) 
+print( "testing" )
+t1=[0,1,0,0,0,0,0,1,0,0]
+t2=[0,0,0,1,0,0,0,0,1,0] 
+t3=[1,0,0,0,0,0,0,0,0,0] 
+t4=[0,0,0,0,0,0,0,0,0,1]
+o1=individual(t1)
+o2=individual(t2)
+o3=individual(t3)
+o4=individual(t4)
+o=[o1,o2,o3,o4]
+print("o1.fitness:" , o1.fitness)
+print("o2.fitness:" , o2.fitness)
+print("o3.fitness:" , o3.fitness)
+print("o4.fitness:" , o4.fitness)
+print("selected:")
+for i in Roulette_Wheel(o):
+    print(i.fitness) 
 
 
-def Cross_Over_2point ( parents=[] ):
+def Cross_Over_2point ( parents ):
     parent1=parents[0]
     parent2=parents[1]
     point1= random.randint( 1 , number_of_things-1 )
@@ -151,6 +151,36 @@ def Cross_Over_2point ( parents=[] ):
 # print(ch[0].Chromosome)
 # print(ch[1].Chromosome)
 
+def Childeren_Production (parents):
+    childs=[]
+    count=0
+    if len(parents) %2 :
+        print("The number of parents is not even!")
+        exit
+
+    while count < len(parents) :
+        childs += Cross_Over_2point( parents[count:count+2] )
+        count += 2
+    return childs
+
+
+# print( "testing" )
+# t1=[0,1,0,0,1,0,0,1,0,0]
+# t2=[0,0,0,1,0,0,0,0,1,0] 
+# t3=[1,0,0,1,0,1,0,1,0,0] 
+# t4=[0,0,0,0,1,0,0,0,0,1]
+# p1=individual(t1)
+# p2=individual(t2)
+# p3=individual(t3)
+# p4=individual(t4)
+# p=[p1,p2,p3,p4]
+# print("parents:")
+# for item in p:
+#     print(item.Chromosome)
+# print("childs:")
+# ch= Childeren_Production(p)
+# for item in ch:
+#     print(item.Chromosome)
 
 
 
