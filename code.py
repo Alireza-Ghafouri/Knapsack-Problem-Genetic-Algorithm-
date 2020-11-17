@@ -2,10 +2,14 @@ import random
 class thing:
     def __init__(self,weight,value):
         self.weight=int(weight)
-        self.value=int(value)
-
-number_of_population= 12                      #could be changed...
-knapsack_size=165                             #could be changed...
+        self.value=int(value) 
+    
+def Read_Config():
+    file= open("Algorithm Configuration.txt", "rt")
+    knapsack_size=file.readline().split("=",1)
+    generation_limit=file.readline().split("=",1)
+    number_of_population=file.readline().split("=",1)
+                                
 
 def Read_Things_info():
     things=[]
