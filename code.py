@@ -98,23 +98,23 @@ def Roulette_Wheel( population=[] , num=1 ):
     return selected
 
 
-print( "testing" )
-t1=[0,1,0,0,0,0,0,1,0,0]
-t2=[0,0,0,1,0,0,0,0,1,0] 
-t3=[1,0,0,0,0,0,0,0,0,0] 
-t4=[0,0,0,0,0,0,0,0,0,1]
-o1=individual(t1)
-o2=individual(t2)
-o3=individual(t3)
-o4=individual(t4)
-o=[o1,o2,o3,o4]
-print("o1.fitness:" , o1.fitness)
-print("o2.fitness:" , o2.fitness)
-print("o3.fitness:" , o3.fitness)
-print("o4.fitness:" , o4.fitness)
-print("selected:")
-for i in Roulette_Wheel(o):
-    print(i.fitness) 
+# print( "testing" )
+# t1=[0,1,0,0,0,0,0,1,0,0]
+# t2=[0,0,0,1,0,0,0,0,1,0] 
+# t3=[1,0,0,0,0,0,0,0,0,0] 
+# t4=[0,0,0,0,0,0,0,0,0,1]
+# o1=individual(t1)
+# o2=individual(t2)
+# o3=individual(t3)
+# o4=individual(t4)
+# o=[o1,o2,o3,o4]
+# print("o1.fitness:" , o1.fitness)
+# print("o2.fitness:" , o2.fitness)
+# print("o3.fitness:" , o3.fitness)
+# print("o4.fitness:" , o4.fitness)
+# print("selected:")
+# for i in Roulette_Wheel(o):
+#     print(i.fitness) 
         
 
 
