@@ -137,19 +137,19 @@ def Cross_Over_2point ( parents=[] ):
     return childs
 
     
-print( "testing" )
-t1=[0,2,4,6,8,10,12,14,16,18]
-t2=[1,3,5,7,9,11,13,15,17,19]
-p1=individual(t1)
-p2=individual(t2)
-p=[p1,p2]
-print ("parents:")
-print(p1.Chromosome)
-print(p2.Chromosome)
-print("childs:")
-ch= Cross_Over_2point(p)
-print(ch[0].Chromosome)
-print(ch[1].Chromosome)
+# print( "testing" )
+# t1=[0,2,4,6,8,10,12,14,16,18]
+# t2=[1,3,5,7,9,11,13,15,17,19]
+# p1=individual(t1)
+# p2=individual(t2)
+# p=[p1,p2]
+# print ("parents:")
+# print(p1.Chromosome)
+# print(p2.Chromosome)
+# print("childs:")
+# ch= Cross_Over_2point(p)
+# print(ch[0].Chromosome)
+# print(ch[1].Chromosome)
 
 
 
