@@ -4,13 +4,13 @@ class thing:
         self.weight=int(weight)
         self.value=int(value)
 
-things=[]
 population=[]
-number_of_things=0
 number_of_population= 12                      #could be changed...
 knapsack_size=165                             #could be changed...
 
 def Read_Things_info():
+    things=[]
+    number_of_things=0
     file= open("data.txt", "rt")
     file.readline()
     lines=file.readlines()
@@ -19,6 +19,7 @@ def Read_Things_info():
         obj = thing ( int(temp[0]) , temp[1] )
         things.append(obj)
         number_of_things += 1
+    return things
 
 class individual:
     def __init__(self,Chrm):
