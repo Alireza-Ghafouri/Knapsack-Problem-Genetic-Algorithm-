@@ -115,6 +115,34 @@ def Roulette_Wheel( population=[] , num=1 ):
 # print("selected:")
 # for i in Roulette_Wheel(o):
 #     print(i.fitness) 
+
+
+def Cross_Over_2point ( parent1 , parent2 ):
+    point1= random.randint( 1 , number_of_things-1 )
+    temp=random.randint( 1 , number_of_things-1 )
+    while temp == point1:
+        temp=random.randint( 1 , number_of_things-1 )
+    point2=temp
+    chrm1= parent1.Chromosome [: point1] + parent2.Chromosome [ point1 : point2 ] + parent1.Chromosome [ point2 : ]
+    chrm2= parent2.Chromosome [: point1] + parent1.Chromosome [ point1 : point2 ] + parent2.Chromosome [ point2 : ]
+    child1= individual( chrm1 )
+    child2= individual( chrm2 )
+    return child1,child2
+
+    
+# print( "testing" )
+# t1=[0,1,0,0,0,0,0,1,0,0]
+# t2=[0,0,0,1,0,0,0,0,1,0]
+# p1=individual(t1)
+# p2=individual(t2)
+# print ("parents:")
+# print(p1.Chromosome)
+# print(p2.Chromosome)
+# print("childs:")
+# ch1,ch2= Cross_Over_2point(p1,p2)
+# print(ch1.Chromosome)
+# print(ch2.Chromosome)
+
         
 
 
