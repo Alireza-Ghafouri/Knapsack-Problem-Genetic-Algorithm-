@@ -23,7 +23,7 @@ for line in lines:
 
 # for t in things:
 #     print(t.weight,"    " , t.value)
-#print(number_of_things)
+print(number_of_things)
 
 knapsack_size=165                           #could be changed...
 
@@ -117,31 +117,44 @@ def Roulette_Wheel( population=[] , num=1 ):
 #     print(i.fitness) 
 
 
-def Cross_Over_2point ( parent1 , parent2 ):
+def Cross_Over_2point ( parents=[] ):
+    parent1=parents[0]
+    parent2=parents[1]
     point1= random.randint( 1 , number_of_things-1 )
     temp=random.randint( 1 , number_of_things-1 )
     while temp == point1:
         temp=random.randint( 1 , number_of_things-1 )
-    point2=temp
-    chrm1= parent1.Chromosome [: point1] + parent2.Chromosome [ point1 : point2 ] + parent1.Chromosome [ point2 : ]
-    chrm2= parent2.Chromosome [: point1] + parent1.Chromosome [ point1 : point2 ] + parent2.Chromosome [ point2 : ]
+    if temp>point1:
+        point2=temp
+    else:
+        point2=point1
+        point1=temp
+    chrm1= parent1.Chromosome [ :point1 ] + parent2.Chromosome [ point1:point2 ] + parent1.Chromosome [ point2: ]
+    chrm2= parent2.Chromosome [ :point1 ] + parent1.Chromosome [ point1:point2 ] + parent2.Chromosome [ point2: ]
     child1= individual( chrm1 )
     child2= individual( chrm2 )
-    return child1,child2
+    childs=[child1,child2]
+    return childs
 
     
-# print( "testing" )
-# t1=[0,1,0,0,0,0,0,1,0,0]
-# t2=[0,0,0,1,0,0,0,0,1,0]
-# p1=individual(t1)
-# p2=individual(t2)
-# print ("parents:")
-# print(p1.Chromosome)
-# print(p2.Chromosome)
-# print("childs:")
-# ch1,ch2= Cross_Over_2point(p1,p2)
-# print(ch1.Chromosome)
-# print(ch2.Chromosome)
+print( "testing" )
+t1=[0,2,4,6,8,10,12,14,16,18]
+t2=[1,3,5,7,9,11,13,15,17,19]
+p1=individual(t1)
+p2=individual(t2)
+p=[p1,p2]
+print ("parents:")
+print(p1.Chromosome)
+print(p2.Chromosome)
+print("childs:")
+ch= Cross_Over_2point(p)
+print(ch[0].Chromosome)
+print(ch[1].Chromosome)
+
+
+
+
+
 
         
 
