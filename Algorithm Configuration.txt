@@ -1,0 +1,4 @@
+Algorithm Configuration
+Knapsack Size = 165
+Generation Limit = 1000
+Number Of Population = 20
