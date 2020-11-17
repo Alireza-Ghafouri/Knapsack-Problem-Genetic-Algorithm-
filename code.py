@@ -4,7 +4,6 @@ class thing:
         self.weight=int(weight)
         self.value=int(value)
 
-population=[]
 number_of_population= 12                      #could be changed...
 knapsack_size=165                             #could be changed...
 
@@ -46,12 +45,14 @@ class individual:
                 self.Chromosome.insert(index,1)
 
 def Produce_First_Generation(number_of_population):
+    population=[]
     chrm=[]
     for i in range (number_of_population):
         for ii in range (number_of_things): 
             chrm.append( random.randint(0,1) )
         if individual(chrm).fitness != 0 :                      # do not add individual with fitness=0
-            population.append ( individual(chrm) ) 
+            population.append ( individual(chrm) )
+    return population
 
 def Roulette_Wheel( population , num=1 ):
     sum_of_chances=population[0].fitness
