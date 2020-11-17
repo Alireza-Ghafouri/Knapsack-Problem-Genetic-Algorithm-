@@ -8,10 +8,9 @@ things=[]
 population=[]
 number_of_things=0
 number_of_population= 12                      #could be changed...
-
+knapsack_size=165                             #could be changed...
 
 # reading data from file 
-
 file= open("data.txt", "rt")
 file.readline()
 lines=file.readlines()
@@ -20,12 +19,6 @@ for line in lines:
     obj = thing ( int(temp[0]) , temp[1] )
     things.append(obj)
     number_of_things += 1
-
-# for t in things:
-#     print(t.weight,"    " , t.value)
-# print(number_of_things)
-
-knapsack_size=165                           #could be changed...
 
 class individual:
     def __init__(self,Chrm):
@@ -50,21 +43,6 @@ class individual:
             else :
                 self.Chromosome.pop(index)
                 self.Chromosome.insert(index,1)
-            
-
-
-
-# print( "testing...")
-# test=[0,1,0,0,1,1,0,0,0,0]
-# o1=individual(test)        
-# o1=individual(True) 
-# print("O1:")
-# print("Total weight:" , o1.total_weight)
-# print("total value:" , o1.total_value)
-# print("fitness:" , o1.fitness)
-# print(o1.Chromosome)
-# o1.mutation()
-# print(o1.Chromosome)
 
 def Produce_First_Generation(number_of_population):
     chrm=[]
@@ -73,12 +51,6 @@ def Produce_First_Generation(number_of_population):
             chrm.append( random.randint(0,1) )
         if individual(chrm).fitness != 0 :                      # do not add individual with fitness=0
             population.append ( individual(chrm) ) 
-
-# print( "testing...")
-# Produce_First_Generation(number_of_population)
-# for item in population:
-#     print(item.Chromosome)
-
 
 def Roulette_Wheel( population , num=1 ):
     sum_of_chances=population[0].fitness
@@ -96,26 +68,6 @@ def Roulette_Wheel( population , num=1 ):
                 break
     
     return selected
-
-
-print( "testing" )
-t1=[0,1,0,0,0,0,0,1,0,0]
-t2=[0,0,0,1,0,0,0,0,1,0] 
-t3=[1,0,0,0,0,0,0,0,0,0] 
-t4=[0,0,0,0,0,0,0,0,0,1]
-o1=individual(t1)
-o2=individual(t2)
-o3=individual(t3)
-o4=individual(t4)
-o=[o1,o2,o3,o4]
-print("o1.fitness:" , o1.fitness)
-print("o2.fitness:" , o2.fitness)
-print("o3.fitness:" , o3.fitness)
-print("o4.fitness:" , o4.fitness)
-print("selected:")
-for i in Roulette_Wheel(o):
-    print(i.fitness) 
-
 
 def Cross_Over_2point ( parents ):
     parent1=parents[0]
@@ -136,21 +88,6 @@ def Cross_Over_2point ( parents ):
     childs=[child1,child2]
     return childs
 
-    
-# print( "testing" )
-# t1=[0,2,4,6,8,10,12,14,16,18]
-# t2=[1,3,5,7,9,11,13,15,17,19]
-# p1=individual(t1)
-# p2=individual(t2)
-# p=[p1,p2]
-# print ("parents:")
-# print(p1.Chromosome)
-# print(p2.Chromosome)
-# print("childs:")
-# ch= Cross_Over_2point(p)
-# print(ch[0].Chromosome)
-# print(ch[1].Chromosome)
-
 def Childeren_Production (parents):
     childs=[]
     count=0
@@ -163,24 +100,6 @@ def Childeren_Production (parents):
         count += 2
     return childs
 
-
-# print( "testing" )
-# t1=[0,1,0,0,1,0,0,1,0,0]
-# t2=[0,0,0,1,0,0,0,0,1,0] 
-# t3=[1,0,0,1,0,1,0,1,0,0] 
-# t4=[0,0,0,0,1,0,0,0,0,1]
-# p1=individual(t1)
-# p2=individual(t2)
-# p3=individual(t3)
-# p4=individual(t4)
-# p=[p1,p2,p3,p4]
-# print("parents:")
-# for item in p:
-#     print(item.Chromosome)
-# print("childs:")
-# ch= Childeren_Production(p)
-# for item in ch:
-#     print(item.Chromosome)
 
 
 
