@@ -9,6 +9,7 @@ def Read_Config():
     knapsack_size=file.readline().split("=",1)
     generation_limit=file.readline().split("=",1)
     number_of_population=file.readline().split("=",1)
+    return knapsack_size,generation_limit,number_of_population
                                 
 
 def Read_Things_info():
