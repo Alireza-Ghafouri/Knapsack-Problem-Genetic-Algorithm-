@@ -6,9 +6,10 @@ class thing:
     
 def Read_Config():
     file= open("Algorithm Configuration.txt", "rt")
-    knapsack_size=file.readline().split("=",1)
-    generation_limit=file.readline().split("=",1)
-    number_of_population=file.readline().split("=",1)
+    file.readline()
+    knapsack_size=file.readline().split("=",1)[1]
+    generation_limit=file.readline().split("=",1)[1]
+    number_of_population=file.readline().split("=",1)[1]
     return knapsack_size,generation_limit,number_of_population
                                 
 
@@ -23,7 +24,7 @@ def Read_Things_info():
         obj = thing ( int(temp[0]) , temp[1] )
         things.append(obj)
         number_of_things += 1
-    return things
+    return things , number_of_things
 
 class individual:
     def __init__(self,Chrm):
@@ -38,6 +39,7 @@ class individual:
             self.fitness=0
         else:
             self.fitness=self.total_weight
+        mutation()
 
     def mutation (self):
         if random.randint(1,100) <= 2 :
@@ -107,6 +109,13 @@ def Childeren_Production (parents):
         count += 2
     return childs
 
+
+# knapsack_size, generation_limit, number_of_population = Read_Config()
+# things , number_of_things = Read_Things_info()
+# print(knapsack_size,generation_limit,number_of_population)
+# print(number_of_things)
+# for i in things:
+#     print(i.weight,i.value)
 
 
 
