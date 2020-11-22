@@ -124,7 +124,7 @@ class generation :
 
 
 # main :
-
+saved_generations=[]
 knapsack_size, generation_limit, number_of_population, number_of_last_saved_generations = Read_Config()
 things , number_of_things = Read_Things_info()
 population=Produce_First_Generation(number_of_population,number_of_things)            # Primary population production
