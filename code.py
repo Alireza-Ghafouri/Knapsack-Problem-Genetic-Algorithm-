@@ -109,19 +109,30 @@ def Child_Production (parents):
         childs.append( parents[count].mutation() )
     return childs
 
+class generation :
+    def __init__(self,population):
+        self.fitnesses=[]
+        sum=0
+        for pop in population:
+            self.fitnesses.append(pop.fitness)
+            sum += pop.fitness
+        self.max_fitness= max(self.fitnesses)
+        self.avg_fitness= sum/ len(self.fitnesses)
+
+    def show_info(self):
+        print("Max Fitness:", self.max_fitness, "   Fitness Average" , self.avg_fitness)
 
 
 # main :
-best_generations=[]
-generation_count=1
+
 knapsack_size, generation_limit, number_of_population, number_of_last_saved_generations = Read_Config()
 things , number_of_things = Read_Things_info()
 population=Produce_First_Generation(number_of_population,number_of_things)            # Primary population production
+generation_count=1
 while generation_count <= generation_limit :
     parents= Roulette_Wheel( population , number_of_population )                      # Parents Selection
     childs= Child_Production(parents)                                                 # Child Production
     population= Roulette_Wheel ( parents + childs , number_of_population )            # Survivors Selection ( μ + λ )
-    # print("generation_count:" , generation_count)
     generation_count+=1
 
 
