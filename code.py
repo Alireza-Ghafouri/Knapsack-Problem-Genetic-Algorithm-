@@ -7,10 +7,11 @@ class thing:
 def Read_Config():
     file= open("Algorithm Configuration.txt", "rt")
     file.readline()
-    knapsack_size=file.readline().split("=",1)[1]
-    generation_limit=file.readline().split("=",1)[1]
-    number_of_population=file.readline().split("=",1)[1]
-    return knapsack_size,generation_limit,number_of_population
+    knapsack_size=int(file.readline().split("=",1)[1])
+    generation_limit=int(file.readline().split("=",1)[1])
+    number_of_population=int(file.readline().split("=",1)[1])
+    number_of_last_saved_generations=int(file.readline().split("=",1)[1])
+    return knapsack_size,generation_limit,number_of_population,number_of_last_saved_generations
                                 
 
 def Read_Things_info():
@@ -38,8 +39,7 @@ class individual:
         if self.total_weight > knapsack_size:
             self.fitness=0
         else:
-            self.fitness=self.total_weight
-        mutation()
+            self.fitness=self.total_value
 
     def mutation (self):
         if random.randint(1,100) <= 2 :
@@ -50,12 +50,13 @@ class individual:
             else :
                 self.Chromosome.pop(index)
                 self.Chromosome.insert(index,1)
+        return self
 
-def Produce_First_Generation(number_of_population):
+def Produce_First_Generation(number_of_population , number_of_things):
     population=[]
-    chrm=[]
-    for i in range (number_of_population):
-        for ii in range (number_of_things): 
+    while len (population) <= number_of_population:
+        chrm=[]
+        for i in range (number_of_things): 
             chrm.append( random.randint(0,1) )
         if individual(chrm).fitness != 0 :                      # do not add individual with fitness=0
             population.append ( individual(chrm) )
@@ -65,9 +66,9 @@ def Roulette_Wheel( population , num=1 ):
     sum_of_chances=population[0].fitness
     selected=[]
     RW= [    ( population[0]  , population[0].fitness )  ]
-    for item in population[1:]:
-        sum_of_chances += item.fitness
-        RW.append( (item , sum_of_chances ) )
+    for indv in population[1:]:
+        sum_of_chances += indv.fitness
+        RW.append( (indv , sum_of_chances ) )
     
     for i in range (num):
         select=random.randint(0,sum_of_chances)
@@ -94,28 +95,46 @@ def Cross_Over_2point ( parents ):
     chrm2= parent2.Chromosome [ :point1 ] + parent1.Chromosome [ point1:point2 ] + parent2.Chromosome [ point2: ]
     child1= individual( chrm1 )
     child2= individual( chrm2 )
-    childs=[child1,child2]
-    return childs
+    return child1 , child2
 
-def Childeren_Production (parents):
+def Child_Production (parents):
     childs=[]
     count=0
-    if len(parents) %2 :
-        print("The number of parents is not even!")
-        exit
-
-    while count < len(parents) :
-        childs += Cross_Over_2point( parents[count:count+2] )
-        count += 2
+    while len (childs) < len(parents)-1 :
+        child1 , child2 =Cross_Over_2point( parents[count:count+2] )
+        childs.append( child1.mutation() )
+        childs.append( child2.mutation() )
+        count +=2
+    if len(parents) %2 != 0 :
+        childs.append( parents[count].mutation() )
     return childs
 
 
-# knapsack_size, generation_limit, number_of_population = Read_Config()
-# things , number_of_things = Read_Things_info()
-# print(knapsack_size,generation_limit,number_of_population)
-# print(number_of_things)
-# for i in things:
-#     print(i.weight,i.value)
+
+# main :
+best_generations=[]
+generation_count=1
+knapsack_size, generation_limit, number_of_population, number_of_last_saved_generations = Read_Config()
+things , number_of_things = Read_Things_info()
+population=Produce_First_Generation(number_of_population,number_of_things)            # Primary population production
+while generation_count <= generation_limit :
+    parents= Roulette_Wheel( population , number_of_population )                      # Parents Selection
+    childs= Child_Production(parents)                                                 # Child Production
+    population= Roulette_Wheel ( parents + childs , number_of_population )            # Survivors Selection ( μ + λ )
+    # print("generation_count:" , generation_count)
+    generation_count+=1
+
+
+   
+
+
+   
+
+
+
+
+
+
 
 
 
