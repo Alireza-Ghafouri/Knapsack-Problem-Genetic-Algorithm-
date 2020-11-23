@@ -157,15 +157,15 @@ while generation_count <= generation_limit :
 t2=time.time()
 maxs=[]
 avgs=[]
-print("-----------------------------------------------------------------")
+print("------------------------------------------------------")
 print("Saved Generations :")
-print()
+print("------------------------------------------------------")
 for item in saved_generations:
     item.show_info()
-
-print("-----------------------------------------------------------------")
-print("Final Results:")
 print()
+print("------------------------------------------------------")
+print("Final Results:")
+print("------------------------------------------------------")
 print("Best Generation Info:")
 print("Generation no.", generation_limit - number_of_last_saved_generations + best_pop_index +1 ,":")
 print("Max Value:" , saved_generations[best_pop_index].max_fitness)
