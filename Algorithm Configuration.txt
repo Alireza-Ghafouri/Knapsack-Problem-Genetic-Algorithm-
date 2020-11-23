@@ -1,5 +1,5 @@
 Algorithm Configuration
-Knapsack Size = 165
+Knapsack Size = 750
 Generation Limit = 100
-Number Of Population = 20
-Number Of Last Saved Generations = 10 
+Number Of Population = 100
+Number Of Last Saved Generations = 20 
