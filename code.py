@@ -12,7 +12,8 @@ def Read_Config():
     generation_limit=int(file.readline().split("=",1)[1])
     number_of_population=int(file.readline().split("=",1)[1])
     number_of_last_saved_generations=int(file.readline().split("=",1)[1])
-    return knapsack_size,generation_limit,number_of_population,number_of_last_saved_generations
+    sel=int(file.readline().split("=",1)[1])
+    return knapsack_size,generation_limit,number_of_population,number_of_last_saved_generations , sel
                                 
 
 def Read_Things_info():
@@ -81,16 +82,8 @@ def Roulette_Wheel( population , num=1 ):
     return selected
 
 def Best_Selection ( population , num=1):
-    selected=[]
-    BS= [ (population[0] , population[0].fitness) ]
-    for indv in population[1:]:
-        BS.append( (indv , indv.fitness) )
-    temp=sorted(BS,key=lambda BS: BS[1],reverse=True)
-    for i in temp:
-        selected.append(i[0])
-    return selected[0:num]
-
-
+    selected=sorted(population,key=lambda individual: individual.fitness , reverse=True)
+    return selected[:int(num)]
 
 def Cross_Over_2point ( parents ):
     parent1=parents[0]
@@ -140,61 +133,59 @@ class generation :
 
 
 # main :
-t1=time.time()
+
 saved_generations=[]
-knapsack_size, generation_limit, number_of_population, number_of_last_saved_generations = Read_Config()
+knapsack_size, generation_limit, number_of_population, number_of_last_saved_generations , sel = Read_Config()
 things , number_of_things = Read_Things_info()
+if sel == 1:
+    selection_function=Roulette_Wheel
+elif sel == 2:
+    selection_function=Best_Selection
+
 population=Produce_First_Generation(number_of_population,number_of_things)                  # Primary population production
-print("first population:")
-for item in population:
-    print(item.fitness)
-print("sorted:")
-for item in Best_Selection(population,5):
-    print(item.fitness)
+for indv in population:
+    print(indv.fitness)
+generation_count=1
+temp_max=-1
+temp_avg=-1
+t1=time.time()
+while generation_count <= generation_limit :
+    parents= selection_function( population , number_of_population * 1.2 )                      # Parents Selection
+    childs= Child_Production(parents)                                                       # Child Production
+    population= selection_function ( parents + childs , number_of_population )                  # Survivors Selection ( μ + λ )
 
-# generation_count=1
-# temp_max=-1
-# temp_avg=-1
-# while generation_count <= generation_limit :
-#     parents= Roulette_Wheel( population , number_of_population * 1.2 )                      # Parents Selection
-#     childs= Child_Production(parents)                                                       # Child Production
-#     population= Roulette_Wheel ( parents + childs , number_of_population )                  # Survivors Selection ( μ + λ )
-
-#     if generation_count > generation_limit - number_of_last_saved_generations :
-#         saved_generations.append( generation (population)  )
-#         if saved_generations[-1].max_fitness > temp_max :
-#             best_pop_index= saved_generations.index( saved_generations[-1] )
-#             temp_max=saved_generations[-1].max_fitness
-#             temp_avg=saved_generations[-1].avg_fitness
-#         elif saved_generations[-1].max_fitness == temp_max :
-#             if saved_generations[-1].avg_fitness >= temp_avg:
-#                 temp_avg=saved_generations[-1].avg_fitness
-#                 best_pop_index= saved_generations.index(saved_generations[-1] )
+    if generation_count > generation_limit - number_of_last_saved_generations :
+        saved_generations.append( generation (population)  )
+        if saved_generations[-1].max_fitness > temp_max :
+            best_pop_index= saved_generations.index( saved_generations[-1] )
+            temp_max=saved_generations[-1].max_fitness
+            temp_avg=saved_generations[-1].avg_fitness
+        elif saved_generations[-1].max_fitness == temp_max :
+            if saved_generations[-1].avg_fitness >= temp_avg:
+                temp_avg=saved_generations[-1].avg_fitness
+                best_pop_index= saved_generations.index(saved_generations[-1] )
         
 
-#     generation_count+=1
-# t2=time.time()
-# maxs=[]
-# avgs=[]
-# print("------------------------------------------------------")
-# print("Saved Generations :")
-# print("------------------------------------------------------")
-# for item in saved_generations:
-#     item.show_info()
-# print()
-# print("------------------------------------------------------")
-# print("Final Results:")
-# print("------------------------------------------------------")
-# print("Best Generation Info:")
-# print("Generation no.", generation_limit - number_of_last_saved_generations + best_pop_index +1 ,":")
-# print("Max Value:" , saved_generations[best_pop_index].max_fitness)
-# print("Avg Value:" , saved_generations[best_pop_index].avg_fitness)
-# print("Max Value Chromosome:" , saved_generations[best_pop_index].max_chromosome)
-# print()
-# print("Execution Time:" , t2-t1)
-
-    
-
+    generation_count+=1
+t2=time.time()
+maxs=[]
+avgs=[]
+print("------------------------------------------------------")
+print("Saved Generations :")
+print("------------------------------------------------------")
+for item in saved_generations:
+    item.show_info()
+print()
+print("------------------------------------------------------")
+print("Final Results:")
+print("------------------------------------------------------")
+print("Best Generation Info:")
+print("Generation no.", generation_limit - number_of_last_saved_generations + best_pop_index +1 ,":")
+print("Max Value:" , saved_generations[best_pop_index].max_fitness)
+print("Avg Value:" , saved_generations[best_pop_index].avg_fitness)
+print("Max Value Chromosome:" , saved_generations[best_pop_index].max_chromosome)
+print()
+print("Execution Time:" , t2-t1)
 
    
 
