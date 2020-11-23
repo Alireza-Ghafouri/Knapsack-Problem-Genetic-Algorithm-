@@ -134,13 +134,13 @@ knapsack_size, generation_limit, number_of_population, number_of_last_saved_gene
 things , number_of_things = Read_Things_info()
 population=Produce_First_Generation(number_of_population,number_of_things)                  # Primary population production
 generation_count=1
+temp_max=-1
+temp_avg=-1
 while generation_count <= generation_limit :
     parents= Roulette_Wheel( population , number_of_population * 1.2 )                      # Parents Selection
     childs= Child_Production(parents)                                                       # Child Production
     population= Roulette_Wheel ( parents + childs , number_of_population )                  # Survivors Selection ( μ + λ )
 
-    temp_max=-1
-    temp_avg=-1
     if generation_count > generation_limit - number_of_last_saved_generations :
         saved_generations.append( generation (population)  )
         if saved_generations[-1].max_fitness > temp_max :
