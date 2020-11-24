@@ -86,6 +86,33 @@ def Best_Selection ( population , num=1):
     selected=sorted(population,key=lambda individual: individual.fitness , reverse=True)
     return selected[:int(num)]
 
+def SUS (population,num=1):
+    n=int(num)
+    sorted_population=sorted(population,key=lambda individual: individual.fitness , reverse=True)
+    sum_of_chances=0
+    cf=float(sorted_population[0].fitness)
+    selected=[]
+
+    for indv in population:
+        sum_of_chances += indv.fitness
+
+    SS= [    ( sorted_population[0]  , cf/sum_of_chances )  ]
+
+    for indv in sorted_population[1:]:
+        cf += indv.fitness
+        SS.append( (indv , cf/sum_of_chances ) )
+    
+    select=random.random() * (1/n)
+
+    for count in range (n):
+        for item in SS:
+            if select < item[1]:
+                selected.append( item[0] )
+                break
+        select += 1/n
+
+    return selected
+
 def Cross_Over_2point ( parents ):
     parent1=parents[0]
     parent2=parents[1]
@@ -188,7 +215,7 @@ print("------------------------------------------------------")
 print("Saved Generations :")
 print("------------------------------------------------------")
 show_saves(saved_generations,'info')
-# show_saves(saved_generations,'bar chart')
+show_saves(saved_generations,'bar chart')
 print()
 print("------------------------------------------------------")
 print("Final Results:")
@@ -201,7 +228,12 @@ print("Max Value Chromosome:" , saved_generations[best_pop_index].max_chromosome
 print()
 print("Execution Time:" , t2-t1)
 
-   
+# print ("first pop:")
+# for i in population:
+#     print(i.fitness) 
+# print("after sus:")
+# for i in SUS(population,5):
+#     print(i.fitness) 
 
 
    
