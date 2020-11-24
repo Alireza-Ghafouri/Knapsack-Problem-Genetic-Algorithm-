@@ -3,4 +3,4 @@ Knapsack Size = 750
 Generation Limit = 100
 Number Of Population = 100
 Number Of Last Saved Generations = 20 
-selection function (1:Roulette_Wheel , 2: Best selection) = 2
+selection function (1:Roulette_Wheel , 2: Best selection , 3: SUS) = 1
