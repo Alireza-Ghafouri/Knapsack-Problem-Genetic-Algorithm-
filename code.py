@@ -1,5 +1,6 @@
 import random
 import time
+# import matplotlib.pyplot as plt 
 class thing:
     def __init__(self,weight,value):
         self.weight=int(weight)
@@ -131,6 +132,22 @@ class generation :
     def show_info(self):
         print("Max Fitness:", self.max_fitness, "   Fitness Average" , self.avg_fitness)
 
+def show_saves(saved_generations,how='info'):
+    if how=='info':
+        for item in saved_generations:
+            item.show_info()
+    # elif how=='bar chart':
+    #     avg_vals=[]
+    #     gen_nums=[]
+    #     for i in range ( len(saved_generations) ):
+    #         gen_nums.append( int (generation_limit-len(saved_generations) + i + 1)  )       #global
+    #     for pop in saved_generations:
+    #         avg_vals.append( pop.avg_fitness )
+    #     plt.bar(gen_nums , avg_vals)
+    #     plt.title('Average Fitness Of Generations' , fontsize=14)
+    #     plt.xlable('Generation number' , fontsize=14)
+    #     plt.ylable('Average Fitness' , fontsize=14)
+    #     plt.show
 
 # main :
 
@@ -142,18 +159,15 @@ if sel == 1:
 elif sel == 2:
     selection_function=Best_Selection
 
-population=Produce_First_Generation(number_of_population,number_of_things)                  # Primary population production
-for indv in population:
-    print(indv.fitness)
+population=Produce_First_Generation(number_of_population,number_of_things)                      # Primary population production
 generation_count=1
 temp_max=-1
 temp_avg=-1
 t1=time.time()
 while generation_count <= generation_limit :
     parents= selection_function( population , number_of_population * 1.2 )                      # Parents Selection
-    childs= Child_Production(parents)                                                       # Child Production
+    childs= Child_Production(parents)                                                           # Child Production
     population= selection_function ( parents + childs , number_of_population )                  # Survivors Selection ( μ + λ )
-
     if generation_count > generation_limit - number_of_last_saved_generations :
         saved_generations.append( generation (population)  )
         if saved_generations[-1].max_fitness > temp_max :
@@ -173,8 +187,8 @@ avgs=[]
 print("------------------------------------------------------")
 print("Saved Generations :")
 print("------------------------------------------------------")
-for item in saved_generations:
-    item.show_info()
+show_saves(saved_generations,'info')
+# show_saves(saved_generations,'bar chart')
 print()
 print("------------------------------------------------------")
 print("Final Results:")
