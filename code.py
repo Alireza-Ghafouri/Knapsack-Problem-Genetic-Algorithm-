@@ -185,6 +185,8 @@ if sel == 1:
     selection_function=Roulette_Wheel
 elif sel == 2:
     selection_function=Best_Selection
+elif sel==3:
+    selection_function=SUS
 
 population=Produce_First_Generation(number_of_population,number_of_things)                      # Primary population production
 generation_count=1
@@ -227,14 +229,6 @@ print("Avg Value:" , saved_generations[best_pop_index].avg_fitness)
 print("Max Value Chromosome:" , saved_generations[best_pop_index].max_chromosome)
 print()
 print("Execution Time:" , t2-t1)
-
-# print ("first pop:")
-# for i in population:
-#     print(i.fitness) 
-# print("after sus:")
-# for i in SUS(population,5):
-#     print(i.fitness) 
-
 
    
 
