@@ -88,29 +88,24 @@ def Best_Selection ( population , num=1):
 
 def SUS (population,num=1):
     n=int(num)
-    sorted_population=sorted(population,key=lambda individual: individual.fitness , reverse=True)
-    sum_of_chances=0
-    cf=float(sorted_population[0].fitness)
     selected=[]
-
-    for indv in population:
+    sum_of_chances= population[0].fitness
+    SS= [    ( population[0]  , population[0].fitness )  ]
+    for indv in population[1:]:
         sum_of_chances += indv.fitness
+        SS.append( (indv , sum_of_chances ) )
 
-    SS= [    ( sorted_population[0]  , cf/sum_of_chances )  ]
-
-    for indv in sorted_population[1:]:
-        cf += indv.fitness
-        SS.append( (indv , cf/sum_of_chances ) )
-    
-    select=random.random() * (1/n)
-
-    for count in range (n):
-        for item in SS:
-            if select < item[1]:
-                selected.append( item[0] )
-                break
-        select += 1/n
-
+    step=sum_of_chances/n
+    select=random.random() * (step)
+    i=0
+    while(n>0):
+        if select < SS[i][1]:
+            selected.append( SS[i][0] )
+            select += step
+            n=n-1
+            i=i-1
+        i= i+1
+            
     return selected
 
 def Cross_Over_2point ( parents ):
@@ -163,18 +158,18 @@ def show_saves(saved_generations,how='info'):
     if how=='info':
         for item in saved_generations:
             item.show_info()
-    # elif how=='bar chart':
-    #     avg_vals=[]
-    #     gen_nums=[]
-    #     for i in range ( len(saved_generations) ):
-    #         gen_nums.append( int (generation_limit-len(saved_generations) + i + 1)  )       #global
-    #     for pop in saved_generations:
-    #         avg_vals.append( pop.avg_fitness )
-    #     plt.bar(gen_nums , avg_vals)
-    #     plt.title('Average Fitness Of Generations' , fontsize=14)
-    #     plt.xlable('Generation number' , fontsize=14)
-    #     plt.ylable('Average Fitness' , fontsize=14)
-    #     plt.show
+    elif how=='bar chart':
+        avg_vals=[]
+        gen_nums=[]
+        for i in range ( len(saved_generations) ):
+            gen_nums.append( int (generation_limit-len(saved_generations) + i + 1)  )       #global
+        for pop in saved_generations:
+            avg_vals.append( pop.avg_fitness )
+        plt.bar(gen_nums , avg_vals)
+        plt.title('Average Fitness Of Generations' , fontsize=14)
+        # plt.xlable('Generation number' , fontsize=14)
+        # plt.ylable('Average Fitness' , fontsize=14)
+        plt.show
 
 # main :
 
@@ -217,7 +212,7 @@ print("------------------------------------------------------")
 print("Saved Generations :")
 print("------------------------------------------------------")
 show_saves(saved_generations,'info')
-show_saves(saved_generations,'bar chart')
+# show_saves(saved_generations,'bar chart')
 print()
 print("------------------------------------------------------")
 print("Final Results:")
